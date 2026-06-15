@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="description" content="Suryaansh S — CS Undergrad, Backend & Systems, ML Explorer. B.Tech CSE at Manipal Institute of Technology, Bangalore.">
+  <title>SURYAANSH_S // SYSTEMS_BACKEND</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #101417;
+      background-image: radial-gradient(#1A1D23 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Card mouse-follow lighting effect */
+    .card-hover {
+      position: relative;
+      overflow: hidden;
+      border-color: #1A1D23;
+    }
+    .card-hover::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(23, 147, 209, 0.1), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .card-hover:hover::before { opacity: 1; }
+    .card-hover > * { position: relative; z-index: 1; }
+    .card-hover:hover {
+      border-color: #1793D1;
+      background-color: #13161C;
+    }
+
+    /* Terminal-style card header */
+    .terminal-header {
+      background: #050608;
+      border-bottom: 1px solid #1A1D23;
+    }
+    .dot {
+      height: 8px; width: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Arch Linux logo — engraved watermark */
+    .engraved-logo {
+      background-color: #101417;
+      background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.9) 100%);
+      -webkit-mask-image: url('https://lh3.googleusercontent.com/aida/AP1WRLsn_pIsk_lt2YmpKeHPqmRWaQAV77VF_TR_K-gVeJuWvD-JxQbXFufJimqBF_hHDMDSgfhtfSuYjdZ7iixf05DEZjsjOrWUaPsqZEoTsy13-V9jaXvDjbuvGf0L1S8Tp2-0O1vW9y_oYRagsEny0pc4gEyapiGi_ySCzuD2bLDJqffZfpUXAsp7FrF2W0SDxVWkhuB-z4mcjyixqdQF14jd22kKgNWEc54i0FWD_pMog3DYtMX0X-Eqy5Se');
+      -webkit-mask-size: contain;
+      -webkit-mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-image: url('https://lh3.googleusercontent.com/aida/AP1WRLsn_pIsk_lt2YmpKeHPqmRWaQAV77VF_TR_K-gVeJuWvD-JxQbXFufJimqBF_hHDMDSgfhtfSuYjdZ7iixf05DEZjsjOrWUaPsqZEoTsy13-V9jaXvDjbuvGf0L1S8Tp2-0O1vW9y_oYRagsEny0pc4gEyapiGi_ySCzuD2bLDJqffZfpUXAsp7FrF2W0SDxVWkhuB-z4mcjyixqdQF14jd22kKgNWEc54i0FWD_pMog3DYtMX0X-Eqy5Se');
+      mask-size: contain;
+      mask-position: center;
+      mask-repeat: no-repeat;
+      filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.15)) drop-shadow(-1px -1px 2px rgba(0,0,0,0.8));
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface":                "#e0e2e8",
+            "surface-container-highest": "#323539",
+            "surface-border":            "#1A1D23",
+            "surface-container":         "#1c2024",
+            "outline-variant":           "#3f4850",
+            "surface-deep":              "#050608",
+            "surface":                   "#101417",
+            "terminal-green":            "#50FA7B",
+            "primary-container":         "#2599d7",
+            "surface-container-low":     "#181c20",
+            "surface-container-high":    "#272a2e",
+            "surface-bright":            "#36393e",
+            "primary":                   "#1793D1",
+            "secondary":                 "#c6c6cd",
+            "warning-amber":             "#F1FA8C",
+            "on-surface-variant":        "#bec8d1",
+            "outline":                   "#89929b",
+            "error":                     "#ffb4ab",
+            "background":                "#101417",
+            "on-secondary":              "#2e3036",
+            "secondary-container":       "#45474d",
+            "on-secondary-container":    "#b4b5bc",
+            "surface-container-lowest":  "#0b0f12"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "unit":            "4px",
+            "stack-xl":        "96px",
+            "stack-sm":        "8px",
+            "stack-lg":        "48px",
+            "margin-desktop":  "64px",
+            "gutter":          "24px",
+            "stack-md":        "24px",
+            "container-max":   "900px",
+            "margin-mobile":   "20px"
+          },
+          fontFamily: {
+            "mono-label":        ["JetBrains Mono"],
+            "body-md":           ["Space Grotesk"],
+            "body-lg":           ["Space Grotesk"],
+            "display-xl":        ["Space Grotesk"],
+            "headline-md":       ["Space Grotesk"],
+            "headline-lg":       ["Space Grotesk"],
+            "display-xl-mobile": ["Space Grotesk"],
+            "mono-code":         ["JetBrains Mono"]
+          },
+          fontSize: {
+            "mono-label":        ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
+            "body-md":           ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "body-lg":           ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "display-xl":        ["72px", { lineHeight: "80px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md":       ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "headline-lg":       ["32px", { lineHeight: "40px", fontWeight: "600" }],
+            "display-xl-mobile": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "mono-code":         ["13px", { lineHeight: "20px", fontWeight: "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-body-md text-on-surface antialiased">
+
+  <!-- Background Arch Linux logo — full viewport watermark -->
+  <div class="fixed inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden opacity-[0.15]" style="mix-blend-mode: screen;" aria-hidden="true">
+    <img
+      src="https://lh3.googleusercontent.com/aida/AP1WRLsn_pIsk_lt2YmpKeHPqmRWaQAV77VF_TR_K-gVeJuWvD-JxQbXFufJimqBF_hHDMDSgfhtfSuYjdZ7iixf05DEZjsjOrWUaPsqZEoTsy13-V9jaXvDjbuvGf0L1S8Tp2-0O1vW9y_oYRagsEny0pc4gEyapiGi_ySCzuD2bLDJqffZfpUXAsp7FrF2W0SDxVWkhuB-z4mcjyixqdQF14jd22kKgNWEc54i0FWD_pMog3DYtMX0X-Eqy5Se"
+      alt=""
+      class="w-[70vw] max-w-none object-contain"
+    >
+  </div>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-[#1793D1]/30" aria-label="Main navigation">
+    <div class="max-w-[900px] mx-auto flex justify-between items-center px-margin-mobile md:px-0 h-16">
+      <span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">SURYAANSH_S</span>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex gap-8 items-center">
+        <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors duration-200" href="#about">About</a>
+        <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors duration-200" href="#education">Education</a>
+        <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors duration-200" href="#skills">Skills</a>
+        <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors duration-200" href="#projects">Projects</a>
+        <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors duration-200" href="#contact">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="md:hidden text-primary" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="hidden md:hidden bg-background/95 border-b border-[#1793D1]/20 px-margin-mobile py-4 flex flex-col gap-4" id="mobile-menu">
+      <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors" href="#about">About</a>
+      <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors" href="#education">Education</a>
+      <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors" href="#skills">Skills</a>
+      <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors" href="#projects">Projects</a>
+      <a class="font-mono-label text-mono-label uppercase text-on-surface hover:text-primary transition-colors" href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="max-w-[900px] mx-auto px-margin-mobile md:px-0 pt-32">
+
+    <!-- HERO -->
+    <section class="flex flex-col items-center text-center mb-stack-xl relative py-12" aria-label="Introduction">
+      <!-- Engraved Arch logo behind text -->
+      <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-0" aria-hidden="true">
+        <div class="engraved-logo w-64 h-64 md:w-96 md:h-96 opacity-20"></div>
+      </div>
+
+      <div class="relative z-10 flex flex-col items-center">
+        <h1 class="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl mb-4 text-white">Suryaansh S</h1>
+        <p class="font-mono-label text-mono-label text-primary uppercase tracking-[0.2em] mb-6 font-bold">CS Undergrad · Backend &amp; Systems · ML Explorer</p>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-stack-md italic">"I build things that work at a low level."</p>
+        <div class="flex gap-4 flex-wrap justify-center">
+          <a class="bg-primary text-surface-deep px-8 py-3 font-mono-label text-mono-label uppercase font-bold tracking-widest hover:brightness-110 transition-all" href="#projects">View Projects</a>
+          <a class="border border-primary text-primary px-8 py-3 font-mono-label text-mono-label uppercase font-bold tracking-widest hover:bg-primary/10 transition-all" href="https://github.com/suryaanshs007" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="mb-stack-xl" id="about">
+      <div class="flex items-center gap-4 mb-stack-md">
+        <span class="text-terminal-green font-mono-code" aria-hidden="true">$</span>
+        <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">whoami</h2>
+        <div class="h-[1px] flex-grow bg-surface-border"></div>
+      </div>
+
+      <div class="space-y-6 font-body-lg leading-relaxed text-on-surface">
+        <p>
+          Currently pursuing a B.Tech in Computer Science at
+          <span class="text-on-surface font-semibold">Manipal Institute of Technology, Bangalore</span>.
+          My fascination with computers started with understanding the metal beneath the software,
+          leading me into the depths of backend architectures and Linux systems.
+        </p>
+        <p>
+          I specialize in <span class="text-primary font-semibold">Machine Learning</span>
+          (AI anomaly detection with CloudSentinel) and robust
+          <span class="text-primary font-semibold">Backend Development</span> using Spring Boot.
+          My desktop environment is a testament to my philosophy:
+          <span class="text-on-surface font-semibold">Arch Linux + Hyprland + Neovim</span> —
+          a minimal, keyboard-driven workflow where every byte matters.
+        </p>
+      </div>
+
+      <!-- Currently learning pills -->
+      <div class="mt-stack-md p-4 bg-surface-container-low border border-[#1793D1]/40 rounded-sm">
+        <p class="font-mono-label text-mono-label text-primary mb-3">CURRENTLY_LEARNING::</p>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-3 py-1 border border-surface-border font-mono-code text-mono-code text-on-surface-variant">&gt;_ Spring Boot</span>
+          <span class="px-3 py-1 border border-surface-border font-mono-code text-mono-code text-on-surface-variant">&gt;_ SQL/JDBC</span>
+          <span class="px-3 py-1 border border-surface-border font-mono-code text-mono-code text-on-surface-variant">&gt;_ ML Mathematics</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="mb-stack-xl" id="education">
+      <div class="flex items-center gap-4 mb-stack-md">
+        <span class="text-terminal-green font-mono-code" aria-hidden="true">$</span>
+        <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">education</h2>
+        <div class="h-[1px] flex-grow bg-surface-border"></div>
+      </div>
+
+      <div class="border-l-4 border-[#1793D1] bg-surface-container p-6 rounded-r-sm">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+          <h3 class="font-headline-md text-headline-md text-on-surface">B.Tech in CSE</h3>
+          <span class="font-mono-label text-mono-label text-primary font-bold">2025 — 2029</span>
+        </div>
+        <p class="text-on-surface-variant font-body-lg">Manipal Institute of Technology, Bangalore</p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="mb-stack-xl" id="skills">
+      <div class="flex items-center gap-4 mb-stack-md">
+        <span class="text-terminal-green font-mono-code" aria-hidden="true">$</span>
+        <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">tech_stack</h2>
+        <div class="h-[1px] flex-grow bg-surface-border"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="font-mono-label text-mono-label text-primary uppercase mb-4 tracking-tighter">Languages &amp; Libraries</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Java</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Python</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">NumPy</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Pandas</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Matplotlib</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-mono-label text-mono-label text-primary uppercase mb-4 tracking-tighter">Tools &amp; OS</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">AWS (EC2, CloudWatch)</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Neovim</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Arch Linux</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Hyprland</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">Git</span>
+            <span class="p-3 border border-surface-border hover:border-[#1793D1] transition-colors font-mono-code text-mono-code">IntelliJ</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="mb-stack-xl" id="projects">
+      <div class="flex items-center gap-4 mb-stack-md">
+        <span class="text-terminal-green font-mono-code" aria-hidden="true">$</span>
+        <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">projects</h2>
+        <div class="h-[1px] flex-grow bg-surface-border"></div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8">
+
+        <!-- PROJECT 01 — CloudSentinel -->
+        <article class="group border overflow-hidden card-hover rounded-sm transition-all duration-300 border-outline-variant">
+          <div class="terminal-header p-3 flex gap-2 items-center">
+            <div class="dot bg-error/50"></div>
+            <div class="dot bg-warning-amber/50"></div>
+            <div class="dot bg-terminal-green/50"></div>
+            <span class="ml-2 font-mono-code text-xs text-on-surface-variant opacity-70 uppercase tracking-widest">project_01.sh</span>
+          </div>
+          <div class="p-stack-md flex flex-col md:flex-row gap-8">
+            <div class="w-full md:w-1/2 overflow-hidden bg-surface-deep border border-surface-border">
+              <img
+                class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjnVdwa58kDtl4Q0cwyoHiZpQ7lc5JhMk0XgpXvvq4v5GVsngXVp9V6vuN_IfHiraxJPc1PthORIGA-UTIbWNsDUHEjQMecCfA7gPU5vB8kQPIsXKq_ISlbgZ8vqFMn-qvAjPfk6zFPC9Ejb5c5tJezlaq2wv0VllE_U75BILH1NTjHgCC3Lnacfcmco7Xc1gBQ4oG8e2nKdypyrIcO413yHIPtoTv7nsElQQznTRT2PLtX0tW3ERxksVlvZWaHRnwAGa2e-LoBNsP"
+                alt="CloudSentinel anomaly detection dashboard"
+              >
+            </div>
+            <div class="w-full md:w-1/2 flex flex-col justify-between">
+              <div>
+                <h3 class="font-headline-md text-headline-md mb-2 text-on-surface group-hover:text-primary transition-colors">CloudSentinel</h3>
+                <p class="mb-4 font-body-md text-on-surface">
+                  AI-powered anomaly detection system deployed on AWS. Uses an Isolation Forest model to ingest
+                  live hardware metrics (CPU load, data usage) from EC2 via CloudWatch, flags anomalies, and
+                  triggers autonomous responses — server pause or shutdown — based on severity. Dashboard
+                  hosted on the EC2 instance itself.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Python</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Isolation Forest</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::AWS EC2</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::CloudWatch</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Streamlit</span>
+                </div>
+              </div>
+              <!-- TODO: Replace href="#" with your CloudSentinel GitHub repo URL -->
+              <a class="text-primary font-mono-label text-mono-label hover:underline flex items-center gap-2 font-bold" href="https://github.com/suryaanshs007/cloudIntelligence" target="_blank" rel="noopener noreferrer">
+                VIEW_REPO <span class="material-symbols-outlined text-sm">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 02 — OdinRecipes -->
+        <article class="group border overflow-hidden card-hover rounded-sm transition-all duration-300 border-outline-variant">
+          <div class="terminal-header p-3 flex gap-2 items-center">
+            <div class="dot bg-error/50"></div>
+            <div class="dot bg-warning-amber/50"></div>
+            <div class="dot bg-terminal-green/50"></div>
+            <span class="ml-2 font-mono-code text-xs text-on-surface-variant opacity-70 uppercase tracking-widest">project_02.sh</span>
+          </div>
+          <div class="p-stack-md flex flex-col md:flex-row-reverse gap-8">
+            <div class="w-full md:w-1/2 overflow-hidden bg-surface-deep border border-surface-border">
+              <img
+                class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJk9A-5fH_aRum5H3sGHHSmlB-nz1EFtNtEEPFIMiiDx5jktqIgC_IsXqoZ06a6ZyAD-MKUoLBDIBEfBkPVZQ0nOFfoEPQXsGMmjw6veeKAola0U8OQRONNkn7XNI8wtefcisIw03nPuhCSqJMFQjH8Uz6Q79hbzW2cSuWan0Bi_W65x0-a7v6U0l0PFwLzB-jyI_BjlLydvREvlXJFgQxVBggBBmoErGmXzbHBR1zt1kFVB3_0sOCsvxwfR2sNbdiuIVtyuXNZHzS"
+                alt="OdinRecipes website screenshot"
+              >
+            </div>
+            <div class="w-full md:w-1/2 flex flex-col justify-between">
+              <div>
+                <h3 class="font-headline-md text-headline-md mb-2 text-on-surface group-hover:text-primary transition-colors">OdinRecipes</h3>
+                <p class="mb-4 font-body-md text-on-surface">
+                  A hand-built recipe website — zero AI-generated code, zero shortcuts. Built from scratch
+                  as part of The Odin Project curriculum, focusing on semantic HTML and precise CSS layout control.
+                  An ongoing commitment: the site grows as the developer grows.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::HTML</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::CSS</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::The Odin Project</span>
+                </div>
+              </div>
+              <!-- TODO: Replace href="#" with your OdinRecipes GitHub repo URL -->
+              <a class="text-primary font-mono-label text-mono-label hover:underline flex items-center gap-2 font-bold" href="https://github.com/suryaanshs007/odin-recipes" target="_blank" rel="noopener noreferrer">
+                VIEW_REPO <span class="material-symbols-outlined text-sm">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 03 — Hyprland Rice -->
+        <article class="group border overflow-hidden card-hover rounded-sm transition-all duration-300 border-outline-variant">
+          <div class="terminal-header p-3 flex gap-2 items-center">
+            <div class="dot bg-error/50"></div>
+            <div class="dot bg-warning-amber/50"></div>
+            <div class="dot bg-terminal-green/50"></div>
+            <span class="ml-2 font-mono-code text-xs text-on-surface-variant opacity-70 uppercase tracking-widest">project_03.sh</span>
+          </div>
+          <div class="p-stack-md flex flex-col md:flex-row gap-8">
+            <div class="w-full md:w-1/2 overflow-hidden bg-surface-deep border border-surface-border">
+              <img
+                class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyItM137IYF95VRWBrQvk3u4MXpWsHU0yNCgOwlS-4Y3oV2WHO3Rtejrfg0tIL7gCy3mOg6l-lEyNp6gC-dbz1DuqMw8oepFrNyqe1wonZj-aAhCRCdY7siMX0JDpLvAKqdoSu-6FDrFhuuQfcYp1WcoR-5l3V4xTsIzVdCGxysOOQYM5OrAMHsNV3lz61XKShQooQIrLfIjK3BI8InzV0hYrc3nTX4AgNXFxWnm9ty_tcFtGQHKS0q7NJzKfEk-ITy_R0Z7FslOkG"
+                alt="Hyprland rice on MacBook Air M4 via UTM"
+              >
+            </div>
+            <div class="w-full md:w-1/2 flex flex-col justify-between">
+              <div>
+                <h3 class="font-headline-md text-headline-md mb-2 text-on-surface group-hover:text-primary transition-colors">Arch Linux Hyprland Rice</h3>
+                <p class="mb-4 font-body-md text-on-surface">
+                  A custom Hyprland rice with a matugen-based dynamic theming engine. A key-bound wallpaper
+                  switcher feeds into matugen, which extracts the active wallpaper's color palette and applies
+                  it live to Waybar — the entire theme shifts with every wallpaper change. Built to run on
+                  Apple Silicon via UTM; runs flawlessly on a MacBook Air M4.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Arch Linux</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Hyprland</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Matugen</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::Waybar</span>
+                  <span class="text-mono-code font-mono-code px-2 py-1 bg-surface-container-high border text-on-surface border-outline">::UTM</span>
+                </div>
+              </div>
+              <!-- TODO: Replace href="#" with your Hyprland dotfiles GitHub repo URL -->
+              <a class="text-primary font-mono-label text-mono-label hover:underline flex items-center gap-2 font-bold" href="https://github.com/suryaanshs007/Arch-Linux-Hyprland-" target="_blank" rel="noopener noreferrer">
+                VIEW_REPO <span class="material-symbols-outlined text-sm">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="mb-stack-xl" id="contact">
+      <div class="flex items-center gap-4 mb-stack-md">
+        <span class="text-terminal-green font-mono-code" aria-hidden="true">$</span>
+        <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">contact</h2>
+        <div class="h-[1px] flex-grow bg-surface-border"></div>
+      </div>
+
+      <div class="bg-surface-container border border-surface-border p-stack-md rounded-sm">
+        <p class="text-on-surface-variant font-body-lg mb-8 italic">
+          I'm always open to talking about backend systems, ML engineering, or the perfect Linux setup. Let's connect.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+          <div class="flex flex-col">
+            <span class="font-mono-label text-mono-label text-primary uppercase mb-1">University Mail</span>
+            <a class="font-mono-code text-on-surface hover:text-terminal-green transition-colors break-all" href="mailto:suryaansh.mitblr2025@learner.manipal.edu">
+              suryaansh.mitblr2025@learner.manipal.edu
+            </a>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-mono-label text-mono-label text-primary uppercase mb-1">Personal Mail</span>
+            <a class="font-mono-code text-on-surface hover:text-terminal-green transition-colors" href="mailto:suryaansh059@gmail.com">
+              suryaansh059@gmail.com
+            </a>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-mono-label text-mono-label text-primary uppercase mb-1">GitHub</span>
+            <a class="font-mono-code text-on-surface hover:text-terminal-green transition-colors" href="https://github.com/suryaanshs007" target="_blank" rel="noopener noreferrer">
+              github.com/suryaanshs007
+            </a>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-mono-label text-mono-label text-primary uppercase mb-1">LinkedIn</span>
+            <a class="font-mono-code text-on-surface hover:text-terminal-green transition-colors" href="https://linkedin.com/in/suryaansh-s-16455836a" target="_blank" rel="noopener noreferrer">
+              linkedin.com/in/suryaansh-s-16455836a
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="w-full py-stack-md bg-background border-t border-[#1793D1]/30 mt-stack-xl">
+    <div class="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-0 gap-4">
+      <span class="font-mono-label text-mono-label text-on-surface uppercase font-bold tracking-tighter">© 2026 SURYAANSH S // SYSTEMS_BACKEND</span>
+      <div class="flex gap-6 opacity-80">
+        <a class="font-mono-code text-mono-code text-on-surface-variant hover:text-terminal-green transition-colors" href="https://github.com/suryaanshs007" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="font-mono-code text-mono-code text-on-surface-variant hover:text-terminal-green transition-colors" href="https://linkedin.com/in/suryaansh-s-16455836a" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Status Indicator FAB -->
+  <div class="fixed bottom-8 right-8 z-40 hidden md:flex items-center gap-3 bg-surface-container border border-surface-border px-4 py-2 rounded-full" aria-hidden="true">
+    <span class="dot bg-terminal-green"></span>
+    <span class="font-mono-label text-[10px] uppercase tracking-widest text-on-surface-variant">System: Active</span>
+  </div>
+
+  <script>
+    // ── Mobile menu toggle ──────────────────────────────────────────────
+    const btn  = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+    // Close mobile menu on link click
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ── Scroll-spy: highlight active nav link ───────────────────────────
+    window.addEventListener('scroll', () => {
+      const sections  = document.querySelectorAll('section[id]');
+      const navLinks  = document.querySelectorAll('nav a[href^="#"]');
+      let current = '';
+
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 120) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('text-primary', 'border-b-2', 'border-[#1793D1]', 'pb-1');
+        link.classList.add('text-on-surface');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.remove('text-on-surface');
+          link.classList.add('text-primary', 'border-b-2', 'border-[#1793D1]', 'pb-1');
+        }
+      });
+    });
+
+    // ── Card mouse-follow lighting ──────────────────────────────────────
+    document.querySelectorAll('.card-hover').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+  </script>
+
+</body>
+</html>
