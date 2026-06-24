@@ -12,6 +12,9 @@ I'm a CS undergrad at Manipal Institute of Technology, Bangalore, currently expl
 - **Tailwind CSS** (via CDN) for styling
 - **Google Stitch** for the initial wireframe and visual design direction
 - **Claude (equipped with a "frontend-design skill")** for refining the design, fixing bugs, and adding interactive features like the scroll triggered ray animation and the 3D spinning Arch logo. (Link to Claude skill used: <a href="https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md?plain=1" target="_blank" rel="noreferrer noopener">https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md?plain=1</a>)
+- **Hermes Agent** An incredible, open-source agentic AI tool that comes with unique features like skill-rewrite and self-authoring, allowing models (running as the 
+hermes agent) to grow increasing smart with every task, I used the built-in "popular-web-designs" skill and instructed hermes to use the Linear Website's color palette. 
+(Link to this product: <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noreferrer noopener">https://hermes-agent.nousresearch.com/</a>)
 - **Vercel** for hosting and deployment
 
 ## Design Notes
